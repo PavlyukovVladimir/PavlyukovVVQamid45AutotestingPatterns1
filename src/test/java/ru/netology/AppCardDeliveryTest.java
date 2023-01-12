@@ -336,7 +336,7 @@ public class AppCardDeliveryTest {
                 .fillForm(info)
                 .fillDate(dateStr)
                 .clickSubmit()
-                .checkNotificationMessage(info.getDate());
+                .checkNotificationMessage(dateStr);
 
         String otherDateStr = DataHelper.nowWithDaysShift(3 - new Random().nextInt(30));
 
