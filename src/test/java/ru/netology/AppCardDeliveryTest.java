@@ -4,7 +4,6 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.junit5.ScreenShooterExtension;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,10 +30,11 @@ public class AppCardDeliveryTest {
     @DisplayName("Позитивный тест, города подставляются случайно")
     @Test
     void mainPositiveTest() {
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfo();
         page
-                .fillForm(DataHelper.getValidCardOrderInputInfo())
+                .fillForm(info)
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
     }
 
     @DisplayName("Не заполнено поле город.")
@@ -112,31 +112,34 @@ public class AppCardDeliveryTest {
     @DisplayName("Имя с ё.")
     @Test
     void nameWithSmallYoTest() {
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutName();
         page
-                .fillForm(DataHelper.getValidCardOrderInputInfoWithoutName())
+                .fillForm(info)
                 .fillName("Неумёха")
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
     }
 
     @DisplayName("Имя с Ё.")
     @Test
     void nameWithLageYoTest() {
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutName();
         page
-                .fillForm(DataHelper.getValidCardOrderInputInfoWithoutName())
+                .fillForm(info)
                 .fillName("Ёжик")
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
     }
 
     @DisplayName("Имя с пробелами и тире.")
     @Test
     void nameWithDashesAndSpacesTest() {
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutName();
         page
-                .fillForm(DataHelper.getValidCardOrderInputInfoWithoutName())
+                .fillForm(info)
                 .fillName("По утру зубодробительно-скучающий")
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
     }
 
     @DisplayName("Имя \"-\"")
@@ -187,34 +190,12 @@ public class AppCardDeliveryTest {
                 .checkPhoneSubText("Поле обязательно для заполнения");
     }
 
-    @Disabled("+ теперь подставляется автоматически")
-    @DisplayName("Телефон без +.")
-    @Test
-    void negativePhoneWithoutPlusTest() {
-        page
-                .fillForm(DataHelper.getValidCardOrderInputInfoWithoutPhone())
-                .fillPhone("79781111111")
-                .clickSubmit()
-                .checkPhoneSubText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.");
-    }
-
     @DisplayName("Телефон короче.")
     @Test
     void negativePhoneShortTest() {
         page
                 .fillForm(DataHelper.getValidCardOrderInputInfoWithoutPhone())
                 .fillPhone("+7978111111")
-                .clickSubmit()
-                .checkPhoneSubText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.");
-    }
-
-    @Disabled("Теперь форма блокирует ввод длинных номеров")
-    @DisplayName("Телефон длиннее.")
-    @Test
-    void negativePhoneLongTest() {
-        page
-                .fillForm(DataHelper.getValidCardOrderInputInfoWithoutPhone())
-                .fillPhone("+797811111111")
                 .clickSubmit()
                 .checkPhoneSubText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.");
     }
@@ -243,11 +224,12 @@ public class AppCardDeliveryTest {
     @Test
     void popupListTest() {
         String[] cities = DataHelper.getValidCities();
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutCity();
         page
-                .fillForm(DataHelper.getValidCardOrderInputInfoWithoutCity())
+                .fillForm(info)
                 .fillCityByPopupList(cities[new Random().nextInt(cities.length)])
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
     }
 
     @DisplayName("Перепланировка на ту же дату")
@@ -258,7 +240,7 @@ public class AppCardDeliveryTest {
         page
                 .fillForm(info)
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
 
         Selenide.closeWindow();
         Selenide.closeWebDriver();
@@ -267,93 +249,96 @@ public class AppCardDeliveryTest {
         page
                 .fillForm(info)
                 .clickSubmit()
-                .checkReplanMessageAbsence();
+                .checkDateSubText("Заказ на выбранную дату уже сделан");;
     }
 
     @DisplayName("Перепланировка на минимальную дату")
     @Test
     void replanningMinDateTest() {
-        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfo();
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutDate();
+        String dateStr = DataHelper.getValidDate();
         page
                 .fillForm(info)
+                .fillDate(dateStr)
                 .clickSubmit()
-                .checkNotificationMessage();
-
-        String dateStr = DataHelper.nowWithDaysShift(3);
+                .checkNotificationMessage(dateStr);
 
         Selenide.closeWindow();
         Selenide.closeWebDriver();
         setUp();
 
+        String otherDateStr = DataHelper.nowWithDaysShift(3);
         page
                 .fillForm(info)
-                .fillDate(dateStr)
+                .fillDate(otherDateStr)
                 .clickSubmit()
                 .checkReplanMessage()
                 .replanButtonClick()
-                .checkNotificationMessage(dateStr);
+                .checkNotificationMessage(otherDateStr);
     }
 
     @DisplayName("Перепланировка на день позднее")
     @Test
     void replanningOneDayLaterTest() {
-        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfo();
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutDate();
+        String dateStr = DataHelper.getValidDate();
         page
                 .fillForm(info)
+                .fillDate(dateStr)
                 .clickSubmit()
-                .checkNotificationMessage();
-
-        String dateStr = info.getDate();
-        dateStr = DataHelper.dateWithDaysShift(dateStr, 1);
+                .checkNotificationMessage(dateStr);
 
         Selenide.closeWindow();
         Selenide.closeWebDriver();
         setUp();
 
+        String otherDateStr = DataHelper.dateWithDaysShift(dateStr, 1);
         page
                 .fillForm(info)
-                .fillDate(dateStr)
+                .fillDate(otherDateStr)
                 .clickSubmit()
                 .checkReplanMessage()
                 .replanButtonClick()
-                .checkNotificationMessage(dateStr);
+                .checkNotificationMessage(otherDateStr);
     }
 
     @DisplayName("Перепланировка на дату позднее")
     @Test
     void replanningLaterDateTest() {
-        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfo();
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutDate();
+        String dateStr = DataHelper.getValidDate();
         page
                 .fillForm(info)
+                .fillDate(dateStr)
                 .clickSubmit()
-                .checkNotificationMessage();
-
-        String dateStr = info.getDate();
-        dateStr = DataHelper.dateWithDaysShift(dateStr, 1 + new Random().nextInt(30));
+                .checkNotificationMessage(dateStr);
 
         Selenide.closeWindow();
         Selenide.closeWebDriver();
         setUp();
 
+        String otherDateStr = DataHelper.dateWithDaysShift(dateStr, 1 + new Random().nextInt(30));
         page
                 .fillForm(info)
-                .fillDate(dateStr)
+                .fillDate(otherDateStr)
                 .clickSubmit()
                 .checkReplanMessage()
                 .replanButtonClick()
-                .checkNotificationMessage(dateStr);
+                .checkNotificationMessage(otherDateStr);
     }
 
     @DisplayName("Перепланировка на недоступную дату")
     @Test
     void replanningNotAvailableDateTest() {
-        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfo();
+        DataHelper.CardOrderInputInfo info = DataHelper.getValidCardOrderInputInfoWithoutDate();
+        String dateStr = DataHelper.getValidDate();
         page
                 .fillForm(info)
+                .fillDate(dateStr)
                 .clickSubmit()
-                .checkNotificationMessage();
+                .checkNotificationMessage(info.getDate());
 
-        String dateStr = DataHelper.nowWithDaysShift(3 - new Random().nextInt(30));
+        String otherDateStr = DataHelper.nowWithDaysShift(3 - new Random().nextInt(30));
 
         Selenide.closeWindow();
         Selenide.closeWebDriver();
@@ -361,7 +346,7 @@ public class AppCardDeliveryTest {
 
         page
                 .fillForm(info)
-                .fillDate(dateStr)
+                .fillDate(otherDateStr)
                 .clickSubmit()
                 .checkDateSubText("Заказ на выбранную дату невозможен");
     }

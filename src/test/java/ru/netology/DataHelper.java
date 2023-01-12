@@ -32,6 +32,10 @@ public class DataHelper {
         return "Оха";
     }
 
+    public static String getValidDate(){
+        return nowWithDaysShift(3 + (new Random()).nextInt(29)); // [3, ..., 31]
+    }
+
     @Value
     public static class CardOrderInputInfo {
         String city;

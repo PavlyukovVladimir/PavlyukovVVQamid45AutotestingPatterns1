@@ -3,7 +3,6 @@ package ru.netology;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.ex.ElementNotFound;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.Keys;
 
@@ -18,11 +17,9 @@ import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class OrderCardDeliveryPage {
-    private DataHelper.CardOrderInputInfo cardOrderInputInfo;
     private SelenideElement cityElement = $("[data-test-id=city] input");
     private SelenideElement citySubElement = $("[data-test-id=city] .input__sub");
     private SelenideElement dateElement = $("[data-test-id=date] input");
@@ -194,21 +191,19 @@ public class OrderCardDeliveryPage {
     }
 
     public OrderCardDeliveryPage fillForm(@NotNull DataHelper.CardOrderInputInfo info) {
-        cardOrderInputInfo = info;
-
-        String city = cardOrderInputInfo.getCity();
+        String city = info.getCity();
         if (city != null) fillCity(city);
 
-        String dateStr = cardOrderInputInfo.getDate();
+        String dateStr = info.getDate();
         if (dateStr != null) fillDate(dateStr);
 
-        String name = cardOrderInputInfo.getName();
+        String name = info.getName();
         if (name != null) fillName(name);
 
-        String phone = cardOrderInputInfo.getPhone();
+        String phone = info.getPhone();
         if (phone != null) fillPhone(phone);
 
-        boolean isAgreement = cardOrderInputInfo.getIsAgreement();
+        boolean isAgreement = info.getIsAgreement();
         if (isAgreement) clickCheckBox();
 
         return this;
@@ -220,17 +215,6 @@ public class OrderCardDeliveryPage {
                 .shouldBe(Condition.text("Успешно!"));
         notificationContentElement
                 .shouldBe(Condition.text("Встреча успешно запланирована на " + dateStr));
-    }
-
-    public void checkNotificationMessage() {
-        assertNotNull(cardOrderInputInfo);
-        assertNotNull(cardOrderInputInfo.getDate());
-
-        notificationTitleElement
-                .shouldBe(Condition.visible, Duration.ofSeconds(15))
-                .shouldBe(Condition.text("Успешно!"));
-        notificationContentElement
-                .shouldBe(Condition.text("Встреча успешно запланирована на " + cardOrderInputInfo.getDate()));
     }
 
     void checkCitySubText(@NotNull String text) {
@@ -261,33 +245,6 @@ public class OrderCardDeliveryPage {
                 .shouldBe(Condition.visible)
                 .shouldBe(Condition.text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         return this;
-    }
-
-    public void checkReplanMessageAbsence() {
-        // В задании сказано: "если заполнить форму повторно теми же данными, за исключением «Даты встречи»,
-        // то система предложит перепланировать время встречи".
-        // Никакой информации о ситуации полного повторения ввода включая дату, нет.
-        // Исходя из здравого смысла, нет нужды подтверждать перенос встречи если переноса нет.
-        // Следовательно, не должно быть требования подтвердить перепланирование встречи.
-
-        // Ждать что какое-то условие не будет выполнено в течение времени, нельзя,
-        // потому что может быть часть времени невыполнение,
-        // потом выполнение потом снова не выполнение и тест будет пройден, хотя был момент когда условие выполнялось.
-        // Например, сообщение о подтверждении перепланировке появится, потом мене чем за 4 секунды исчезнет и тест пройдет.
-
-        // Поэтому ждем что элемент будет присутствовать, если он так и не появится, то это хорошо.
-        // Если же он появится, то проверяем, что он не требует подтвердить перепланировку.
-        // Причем снижаем время ожидания, потому что если он вообще появился то ждать уже нечего.
-        try {
-            // Тут должна сработать ошибка ElementNotFound если реплан элементне не виден в течении таймаута
-            replanTitleElement.should(Condition.visible);
-            // Если же он есть, то тут ожидается, что он не будет требовать подтверждение или будет скрыт.
-            // Время ожидание в четверть секунды, потому что если ранее не было ошибки то ждать уже нечего.
-            replanTitleElement.shouldNot(
-                    Condition.text("Необходимо подтверждение"),
-                    Duration.ofMillis(250L));
-        } catch (ElementNotFound ignored) {
-        }
     }
 
     public OrderCardDeliveryPage replanButtonClick() {
