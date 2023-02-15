@@ -1,28 +1,49 @@
-package ru.netology;
+package ru.netology.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.junit5.ScreenShooterExtension;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
+import ru.netology.data.Constants;
+import ru.netology.data.DataHelper;
+import ru.netology.pages.OrderCardDeliveryPage;
 
 import java.text.ParseException;
 import java.util.Random;
 
 
-@ExtendWith({ScreenShooterExtension.class})
 public class AppCardDeliveryTest {
+    private static DataHelper.Exec.JarControl jarControl;
     private final String baseUrl = "http://localhost:9999";
     private OrderCardDeliveryPage page;
+
+    @BeforeAll
+    static void setUpAll() {
+        if (Constants.PRE_TEST_PREPARATION) {
+            jarControl = new DataHelper.Exec.JarControl();
+            jarControl.start();
+        }
+        SelenideLogger.addListener(
+                "AllureSelenide", new AllureSelenide()
+                        .screenshots(true)  // делать скриншоты
+                        .savePageSource(false)) ; // не сохранять копии html страниц
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("AllureSelenide");
+        if (Constants.POST_TEST_PREPARATION) {
+            jarControl.stop();
+        }
+    }
 
     @BeforeEach
     void setUp() {
         Configuration.browser = "chrome";
         Configuration.baseUrl = baseUrl;
 //        Configuration.holdBrowserOpen = true;  // false не оставляет браузер открытым по завершению теста
-        Configuration.reportsFolder = "build/reports/tests/test/screenshoots";
+//        Configuration.reportsFolder = "build/reports/tests/test/screenshoots";
         Selenide.open("");
         page = new OrderCardDeliveryPage();
     }
@@ -249,7 +270,8 @@ public class AppCardDeliveryTest {
         page
                 .fillForm(info)
                 .clickSubmit()
-                .checkDateSubText("Заказ на выбранную дату уже сделан");;
+                .checkDateSubText("Заказ на выбранную дату уже сделан");
+        ;
     }
 
     @DisplayName("Перепланировка на минимальную дату")

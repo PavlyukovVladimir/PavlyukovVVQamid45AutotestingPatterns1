@@ -1,10 +1,11 @@
-package ru.netology;
+package ru.netology.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.Keys;
+import ru.netology.data.DataHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -217,23 +218,23 @@ public class OrderCardDeliveryPage {
                 .shouldBe(Condition.text("Встреча успешно запланирована на " + dateStr));
     }
 
-    void checkCitySubText(@NotNull String text) {
-        citySubElement.shouldHave(Condition.text(text));
+    public void checkCitySubText(@NotNull String text) {
+        citySubElement.shouldHave(Condition.text(text), Duration.ofSeconds(2));
     }
 
-    void checkDateSubText(@NotNull String text) {
-        dateSubElement.shouldHave(Condition.text(text));
+    public void checkDateSubText(@NotNull String text) {
+        dateSubElement.shouldHave(Condition.text(text), Duration.ofSeconds(2));
     }
 
-    void checkNameSubText(@NotNull String text) {
+    public void checkNameSubText(@NotNull String text) {
         nameSubElement.shouldHave(Condition.text(text));
     }
 
-    void checkPhoneSubText(@NotNull String text) {
-        phoneSubElement.shouldHave(Condition.text(text), Duration.ofSeconds(1));
+    public void checkPhoneSubText(@NotNull String text) {
+        phoneSubElement.shouldHave(Condition.text(text), Duration.ofSeconds(2));
     }
 
-    void checkAgreementInvalidIndication() {
+    public void checkAgreementInvalidIndication() {
         agreementElement.shouldHave(Condition.cssClass("input_invalid"));
     }
 

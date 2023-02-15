@@ -1,16 +1,68 @@
-package ru.netology;
+package ru.netology.data;
 
 import com.github.javafaker.Faker;
+import io.github.cdimascio.dotenv.Dotenv;
+import lombok.SneakyThrows;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
+
 
 public class DataHelper {
     private DataHelper() {
+    }
+
+    public static class Exec {
+        private Exec() {
+        }
+
+        public static class JarControl {
+            private final String pathToJarFile;
+            private Process process = null;
+
+            public JarControl() {
+                this.pathToJarFile = "artifacts/app-card-delivery.jar";
+            }
+
+            public void start() {
+                process = execJar(
+                        pathToJarFile,
+                        " & echo $! > ./testserver.pid"); // для ручной остановки
+            }
+
+            public void stop() {
+                process.destroy();
+            }
+        }
+
+        @SneakyThrows
+        private static Process execJar(@NotNull String pathToJarFile, String... params) {
+            List<String> commands = new ArrayList<>();
+            commands.add("java");
+            commands.add("-jar");
+            commands.add(pathToJarFile);
+            commands.addAll(Arrays.asList(params));
+            return new ProcessBuilder()
+                    .directory(new File("./"))
+                    .command(commands)
+                    .start();
+        }
+
+        @SneakyThrows
+        private static Process execBashScriptFromFile(@NotNull String pathToScriptFile, String... params) {
+            List<String> commands = new ArrayList<>();
+            commands.add("sh");
+            commands.add(pathToScriptFile);
+            commands.addAll(Arrays.asList(params));
+            return new ProcessBuilder()
+                    .directory(new File("./"))
+                    .command(commands)
+                    .start();
+        }
     }
 
     public static String nowWithDaysShift(int days_count) {
