@@ -67,59 +67,45 @@
 
 # Запуск тестов
 
-1. Убедиться, что в файле [Constants.java](java/ru/netology/data/Constants.java),
-```java
-public static final boolean PRE_TEST_PREPARATION = true;
-public static final boolean POST_TEST_PREPARATION = true;
-```
-
+1. Убедиться, что в файле [Constants.java](src/test/java/ru/netology/data/Constants.java).
+   ```java
+   public static final boolean PRE_TEST_PREPARATION = true;
+   public static final boolean POST_TEST_PREPARATION = true;
+   ```
 2. Запустить в терминале выполнение тестов:
 
-`./gradlew clean test`
-
-3. Запустить сборку отчета allure:
-
-`./gradlew allureReport`
-
-4. [Просмотр отчета gradle(локальное выполнение тестов)](build/reports/tests/test/index.html)
-
-5. [Просмотр allure отчета](build/reports/allure-report/allureReport/index.html)
+    `./gradlew clean test`
+3. [Просмотр отчета gradle(локальное выполнение тестов)](build/reports/tests/test/index.html)
+4. [Просмотр allure отчета](build/reports/allure-report/allureReport/index.html)
 
 <details><summary>Для тех кто любит больше контроля:</summary>
 
-1. Установить в файле [Constants.java](java/ru/netology/data/Constants.java),
-```java
-public static final boolean PRE_TEST_PREPARATION = false;
-public static final boolean POST_TEST_PREPARATION = false;
-```
+1. Установить в файле [Constants.java](src/test/java/ru/netology/data/Constants.java),
+   ```java
+   public static final boolean PRE_TEST_PREPARATION = false;
+   public static final boolean POST_TEST_PREPARATION = false;
+   ```
 
 2. Runs server:
-```sh
-java -jar artifacts/app-card-delivery.jar & echo $! > ./testserver.pid &
-```
-(_id процесса сохраняется в файл, чтобы потом, если нужно, было проще вручную послать ему сигнал корректно завершиться_)
-
-_на удаленной машине эта команда будет чуть другая `java -jar ./artifacts/app-card-delivery.jar &`_
+   ```sh
+   java -jar artifacts/app-card-delivery.jar & echo $! > ./testserver.pid &
+   ```
+   (_id процесса сохраняется в файл, чтобы потом, если нужно, было проще вручную послать ему сигнал корректно завершиться_),
+   _на удаленной машине эта команда будет чуть другая `java -jar ./artifacts/app-card-delivery.jar &`_
 
 3. Runs all tests: `./gradlew clean test`
-
-_на удаленной машине эта команда тоже будет чуть другая `./gradlew test -Dselenide.headless=true --info`_
-
+   _на удаленной машине эта команда тоже будет чуть другая `./gradlew test -Dselenide.headless=true --info`_
 4. Shut down the server
-```sh
-kill -TERM $(cat ./testserver.pid)
-```
-
+   ```sh
+   kill -TERM $(cat ./testserver.pid)
+   ```
 5. Отчеты:
-
-* [Просмотр отчета gradle(локальное выполнение тестов)](build/reports/tests/test/index.html)
-* [Просмотр отчета(appveyor выполнение тестов при push. Можно скачать архив отчета reports.zip, расположен на вкладке Artifacts)](https://ci.appveyor.com/project/PavlyukovVladimir/pavlyukovvvqamid45autotestingselenide/history)
-* Allure report:
-    * `./gradlew allureReport --clean` - generates an Allure report
-    * [Просмотр allure отчета](build/reports/allure-report/allureReport/index.html)
-
-
-* Alternative allure report: `./gradlew allureServe` - generates an Allure report and opens it in the default browser
+   * [Просмотр отчета gradle(локальное выполнение тестов)](build/reports/tests/test/index.html)
+   * [Просмотр отчета(appveyor выполнение тестов при push. Можно скачать архив отчета reports.zip, расположен на вкладке Artifacts)](https://ci.appveyor.com/project/PavlyukovVladimir/pavlyukovvvqamid45autotestingselenide/history)
+   * Allure report:
+      * `./gradlew allureReport --clean` - generates an Allure report
+      * [Просмотр allure отчета](build/reports/allure-report/allureReport/index.html)
+   * Alternative allure report: `./gradlew allureServe` - generates an Allure report and opens it in the default browser
 </details>
 
 # Багрепорты

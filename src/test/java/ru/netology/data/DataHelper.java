@@ -1,7 +1,6 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.SneakyThrows;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +17,24 @@ public class DataHelper {
 
     public static class Exec {
         private Exec() {
+        }
+
+        public static class AllureControl {
+            private static Process process = null;
+
+            private AllureControl() {
+            }
+
+            @SneakyThrows
+            public static void allureReportCreate() {
+                List<String> commands = new ArrayList<>();
+                commands.add("./gradlew");
+                commands.add("allureReport");
+                process = new ProcessBuilder()
+                        .directory(new File("./"))
+                        .command(commands)
+                        .start();
+            }
         }
 
         public static class JarControl {
@@ -84,7 +101,7 @@ public class DataHelper {
         return "Оха";
     }
 
-    public static String getValidDate(){
+    public static String getValidDate() {
         return nowWithDaysShift(3 + (new Random()).nextInt(29)); // [3, ..., 31]
     }
 
@@ -230,11 +247,4 @@ public class DataHelper {
         return new CardOrderInputInfo(info.getCity(), info.getDate(), info.getName(), info.getPhone(), false);
     }
 
-//    @Test
-//    void test() {
-//        String date = nowWithDaysShift(-2);
-//        String date2 = nowWithYearsShift(-2);
-//        String ff = "" + getValidCardOrderInputInfo();
-//        System.out.println();
-//    }
 }

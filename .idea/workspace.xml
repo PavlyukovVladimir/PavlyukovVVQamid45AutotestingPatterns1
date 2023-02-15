@@ -4,20 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48593d8a-c428-4766-adfb-22e6e61bd8f7" name="Changes" comment="rework">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allure.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/allure.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/netology/AppCardDeliveryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/netology/AppCardDeliveryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/netology/OrderCardDeliveryPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/netology/OrderCardDeliveryPage.java" afterDir="false" />
+    <list default="true" id="48593d8a-c428-4766-adfb-22e6e61bd8f7" name="Changes" comment="донастройка appveyor">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,12 +79,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "/home/vladimir/IdeaProjects/PavlyukovVVQamid45AutotestingPatterns1/src/main",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;/home/vladimir/IdeaProjects/PavlyukovVVQamid45AutotestingPatterns1/src/main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="ru.netology" />
@@ -108,9 +96,12 @@
       <recent name="$PROJECT_DIR$/artifacts" />
       <recent name="$PROJECT_DIR$/src/test/java/ru/netology" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ru.netology" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [allureReport --clean]">
-    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [allureReport --clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [allureReport]">
+    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [allureReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -122,7 +113,6 @@
         <option name="taskNames">
           <list>
             <option value="allureReport" />
-            <option value="--clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -132,17 +122,69 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [allureReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [clean allureReport --depends-on-tests]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
+            <option value="clean" />
+            <option value="allureReport" />
+            <option value="--depends-on-tests" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [clean test &amp; ./gradlew allureReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="test" />
+            <option value="&amp;" />
+            <option value="./gradlew" />
+            <option value="allureReport" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [clean test | ./gradlew allureReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="test" />
+            <option value="|" />
+            <option value="./gradlew" />
             <option value="allureReport" />
           </list>
         </option>
@@ -175,55 +217,12 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="PavlyukovVVQamid45AutotestingPatterns1 [wrapper]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="wrapper" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [allureReport --clean]" />
-        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [clean test]" />
-        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [clean]" />
         <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [allureReport]" />
-        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [wrapper]" />
+        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [clean test]" />
+        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [clean test &amp; ./gradlew allureReport]" />
+        <item itemvalue="Gradle.PavlyukovVVQamid45AutotestingPatterns1 [clean allureReport --depends-on-tests]" />
       </list>
     </recent_temporary>
   </component>
@@ -257,12 +256,35 @@
       <option name="project" value="LOCAL" />
       <updated>1673556650255</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="изменено для сдачи первой задачи репортинга:&#10;добавлена возможность автоматического запуска/остановки SUT перед/после тестов&#10;добавлен отчет allure">
+      <created>1676465525706</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1676465525706</updated>
+    </task>
+    <task id="LOCAL-00005" summary="донастройка appveyor">
+      <created>1676465796507</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1676465796507</updated>
+    </task>
+    <task id="LOCAL-00006" summary="донастройка appveyor">
+      <created>1676466259363</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1676466259363</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="rework" />
-    <option name="LAST_COMMIT_MESSAGE" value="rework" />
+    <MESSAGE value="изменено для сдачи первой задачи репортинга:&#10;добавлена возможность автоматического запуска/остановки SUT перед/после тестов&#10;добавлен отчет allure" />
+    <MESSAGE value="донастройка appveyor" />
+    <option name="LAST_COMMIT_MESSAGE" value="донастройка appveyor" />
   </component>
 </project>
